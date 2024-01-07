@@ -1,0 +1,45 @@
+.auth {
+
+    &-nav{
+        min-height: 92vh;
+
+        @include breakpoint-down(medium){
+            min-height: 75vh;
+
+        }
+    }
+
+    &-box{
+        height: 100%;
+        min-width: 350px;
+        margin-left: -1rem;
+        margin-right: -2rem;
+
+        @include breakpoint-up(medium){
+            height: 100%;
+            min-width: 450px;
+            margin-left: 0rem;
+            margin-right: 0rem;
+        }
+    
+    }
+    
+    &-tab{
+        margin-left: 3rem;
+        margin-right: 1rem;
+
+        @include breakpoint-up(medium){
+            margin-left: 4rem;
+            margin-right: 3rem;
+        }
+    }
+    &-form {
+        input {
+            width: 100%;
+            border-radius: 1rem;
+            &:focus {
+                outline: none;
+            }
+        }
+    }
+}

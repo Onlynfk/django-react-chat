@@ -1,0 +1,49 @@
+.dashboard{
+    &-cardbtns{
+        display: flex;
+        justify-content: space-between;
+        button{
+            width: 9rem;
+        }
+        @include breakpoint-up(medium){
+            justify-content: space-evenly;
+            button{
+                width: 10rem;
+            }
+        }
+
+        
+
+    }
+    &-row{
+        display: flex;
+        justify-content: flex-start;
+        gap: 1rem;
+        .first{
+            flex: 0.2;
+            @include breakpoint-down(medium){
+                display: none;
+                flex: 0;
+            }
+        }
+        .second{
+            flex: 0.5;
+            @include breakpoint-down(medium){
+                display: none;
+                flex: 0;
+            }
+            hr{
+                color:#313131 !important;
+            }
+        
+        }
+        .third{
+            flex: 0.3;
+            @include breakpoint-down(medium){
+                flex: 1;
+                margin-left: 1.5rem;
+            }
+        
+        }
+    }
+}

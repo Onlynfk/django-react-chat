@@ -1,0 +1,30 @@
+.cto_button{
+    border-radius: 1.2rem;
+    &-auth{
+        border: 1px solid $GRAY_DARK;
+        color: #ADAAAA;
+        background: $GRAY_DARK;
+    }
+    &-signin{
+        border: 1px solid $BASE_ORANGE;
+        color: $BASE_ORANGE;
+        
+        &:hover{
+            background: $BASE_ORANGE;
+            color: $WHITE;
+        }
+    }
+
+    &-signup{
+        border: 1px solid $BASE_BLUE;
+        color: $WHITE;
+        background: $BASE_BLUE;
+
+        &:hover{
+            background: transparent;
+            color: $WHITE;
+        }
+    
+    }
+
+}
