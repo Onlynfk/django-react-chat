@@ -1,4 +1,4 @@
-from chat.models import Chat, Room
+from apps.chat.models import Chat, Room
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 from django.contrib.auth.models import User

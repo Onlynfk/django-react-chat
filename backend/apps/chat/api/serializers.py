@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from chat.models import Room, Chat
+from apps.chat.models import Room, Chat
 
 
 # I wrote this code

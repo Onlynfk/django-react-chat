@@ -38,9 +38,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
-    'crispy_forms',
-    'django_cleanup',
-
+    # system plugins
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.sites',
@@ -49,12 +47,17 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'allauth',
-    'allauth.account',
-    'chat',
+    
+    # third-party plugins
+    "drf_yasg",
+    "coreapi",
     'channels',
     'rest_framework',
-    'rest_framework.authtoken',  # Add this line
+     
+    # apps
+    'apps.chat',
+    'apps.authentication',
+ 
 ]
 
 MIDDLEWARE = [
@@ -84,6 +87,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'authentication.User'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
@@ -169,6 +174,6 @@ CHANNEL_LAYERS = {
     },
 }
 
-SITE_ID = 2     # considering 2nd site in 'Sites' to be 127.0.0.1 (for dev)
+SITE_ID = 2
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'

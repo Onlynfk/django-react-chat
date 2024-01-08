@@ -1,23 +1,22 @@
 from django.db import models
-from django.contrib.auth.models import User
+from apps.authentication.models import User
 
 
 class Room(models.Model):
     # room_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     room_id = models.AutoField(primary_key=True)
-    author = models.ForeignKey(User, related_name='author_room', on_delete=models.CASCADE)
-    friend = models.ForeignKey(User, related_name='friend_room', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, related_name='sender', on_delete=models.CASCADE)
+    reciever = models.ForeignKey(User, related_name='reciever', on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.room_id}-{self.author}-{self.friend}"
+        return f"{self.room_id}-{self.sender}-{self.reciever}"
 
 
 class Chat(models.Model):
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='chats')
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='author_msg')
-    friend = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friend_msg')
-    # from
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender_msg')
+    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reciever_msg')
     text = models.CharField(max_length=300)
     date = models.DateTimeField(auto_now_add=True)
     has_seen = models.BooleanField(default=False)
