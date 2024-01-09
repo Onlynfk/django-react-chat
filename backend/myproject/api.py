@@ -26,7 +26,7 @@ urlpatterns = [
     path("api/docs/", schema, name="schema-swagger-ui"),
     path('api/chats/', include('apps.chat.api.urls')),
     path('api/auth/', include('apps.authentication.routers')),
-    path('api/auth/', include('apps.authentication.urls')),
+    path('api/', include('apps.authentication.urls')),
 ]
 
 if settings.DEBUG:

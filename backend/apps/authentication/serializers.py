@@ -10,8 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'first_name', 'last_name', 'email']
-        read_only_field = ['is_active', 'created_at',
-                           'updated_at',]
 
 
 class RegisterSerializer(UserSerializer):
@@ -45,11 +43,6 @@ class LoginSerializer(TokenObtainPairSerializer):
             user = User.objects.get(email=email)
         except User.DoesNotExist:
             raise serializers.ValidationError('Invalid email or password.')
-
-        if user.registration_method == 'google':
-            message = (
-                "Please use the 'Sign in with Google' option as your email is linked to a Google account.")
-            raise serializers.ValidationError(message)
 
         authenticated_user = authenticate(email=email, password=password)
         if not authenticated_user:

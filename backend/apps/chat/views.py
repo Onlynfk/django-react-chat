@@ -4,7 +4,8 @@ from django.contrib import messages
 from .models import Room, Chat
 from django.db.models import Q
 from friend.models import FriendList
-from django.contrib.auth.models import User
+from apps.authentication.models import User
+
 
 
 # I wrote this code

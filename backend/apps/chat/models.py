@@ -16,8 +16,9 @@ class Room(models.Model):
 class Chat(models.Model):
     room_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='chats')
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sender_msg')
-    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reciever_msg')
-    text = models.CharField(max_length=300)
+    reciever = models.ForeignKey(User, on_delete=models.CASCADE, related_name='friend_msg')
+    text = models.TextField()
+    slug = models.CharField(max_length=300, unique=True, blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     has_seen = models.BooleanField(default=False)
 

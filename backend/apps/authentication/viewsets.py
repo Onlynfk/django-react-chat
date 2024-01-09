@@ -56,8 +56,8 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
         return Response(
             {
                 'user': data.get('user'),
-                'refresh_token': data.get('refresh'),
-                'access_token': data.get('access')
+                'refresh': data.get('refresh'),
+                'access': data.get('access')
             },
             status=status.HTTP_200_OK
         )
