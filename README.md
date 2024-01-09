@@ -75,23 +75,32 @@ Systm UML Diagram
 
 ```
 
+## API docs with Swagger API
+### It can be accessed on the backend visting this route [http://127.0.0.1:8000/api/docs/]
+
+<div align="start">
+<img width="80%" align="start" src="./Login.png"/>
+</div>
+
+
 ## Frontend Screenshots
 
 <div align="start">
 <img width="80%" align="start" src="./Login.png"/>
 </div>
 
-## Above is the Login Screenshot
+### Above is the Login Screenshot
 
 
 <div align="start">
 <img width="80%" align="start" src="./Rooms.png"/>
 </div>
 
-## Above is the Chat/Users List Screenshot
+### Above is the Chat/Users List Screenshot
 
 <div align="start">
 <img width="80%" align="start" src="./Chat.png"/>
 </div>
 
-## And Lastly the Chat Screenshot
+### And Lastly the Chat Screenshot
+
