@@ -52,13 +52,15 @@ export default function Login() {
       .then((response) => {
         console.log("response", response);
         if (response.status === 200) {
-          localStorage.setItem("usertoken", response.data.access);
-          localStorage.setItem("username", response.data.username);
-          localStorage.setItem("user_id", response.data.id);
+          localStorage.setItem("token", response.data.access);
+          const userString = JSON.stringify(response.data.user);
+          localStorage.setItem("user", userString);    
+          navigate('/')
         } else {
           setError(response.data.detail);
           setErrorVisible(true);
           setDisable(false);
+         
         }
       })
       .catch((error) => {

@@ -9,10 +9,10 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route exact path="/" element={<Login />} />
-        <Route exact path="/chat" element={<Chat />} />
+        <Route exact path="/" element={<ChatRooms />} />
+        <Route exact path="/chat/:room_id/:receiver_id/" element={<Chat />} />
         <Route exact path="/chats" element={<ChatRooms />} />
-
+        <Route exact path="/login" element={<Login />} />
 
         <Route exact path="/register" element={<Register />} />
         <Route exact path="/404" element={<NotFound />} />

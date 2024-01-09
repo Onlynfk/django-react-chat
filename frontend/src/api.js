@@ -1,10 +1,8 @@
 import axios from 'axios';
 import { API_URL } from './config';
 
-const userToken = localStorage.getItem('usertoken');
-const user_id = parseInt(localStorage.getItem('user_id'))
-
-console.log("user_id", user_id)
+const userToken = localStorage.getItem('token');
+console.log("token", userToken)
 
 // Set up the headers with the authentication token
 const headers = {
@@ -14,56 +12,14 @@ const headers = {
 
 
 export const loginApi = (payload) => {
-  return axios.post(`${API_URL}/api/v1/token/login/`, payload);
-};
-
-export const fetchPoll = (url) => {
-  return axios
-    .get(`${API_URL}/api/v1/polls/${url}/`)
-    .then((res) => {
-      return res.data;
-    })
-    .catch((err) => {
-      return err;
-    });
-}
-
-export const pollResults = (url) => {
-  return axios
-    .get(`${API_URL}/api/v1/polls/results/${url}/`)
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      console.log(err.message)
-      return err;
-    });
-}
-
-export const pollVote = (url, choice_id) => {
-  // Get the user token from localStorage
-  const user_id = parseInt(localStorage.getItem('user_id'))
-  console.log("user_id", user_id)
-
-  return axios
-    .post(
-      `${API_URL}/api/v1/polls/vote/${url}/`,
-      { choice_id, user_id }, // assuming choice_id needs to be sent in the request body
-
-    )
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return err;
-    });
+  return axios.post(`${API_URL}/api/auth/login/`, payload);
 };
 
 
 export const signupApi = (data) => {
 
   return axios
-    .post(`${API_URL}/api/v1/profiles/viewer/`, data)
+    .post(`${API_URL}/api/auth/register/`, data)
     .then((res) => {
       return res;
     })
@@ -72,16 +28,62 @@ export const signupApi = (data) => {
     });
 }
 
-export const googleLogin = (code) => {
+export const chatsListAPI = () => {
   return axios
-    .get(`${API_URL}/api/v1/auth/login/google/${code}`)
+    .get(`${API_URL}/api/chats/`, { headers: headers })
     .then((res) => {
-      console.log("res", res)
-      localStorage.setItem("usertoken", res.data.access)
-      localStorage.setItem("user_id", res.data.user_id);
-      return res.data;
+      return res;
     })
     .catch((err) => {
       return err;
     });
-}
+};
+
+
+export const usersListAPI = () => {
+  return axios
+    .get(`${API_URL}/api/users/`, { headers: headers })
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
+export const createRoomAPI = (reciever_id) => {
+  return axios
+    .get(`${API_URL}/api/chats/create_room/${reciever_id}/`, { headers: headers })
+    .then((res) => {
+      console.log("hello", res)
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
+export const fetchRoomAPI = (room_id, receiver_id) => {
+  return axios
+    .get(`${API_URL}/api/chats/room/${room_id}/${receiver_id}/`, { headers: headers })
+    .then((res) => {
+      console.log("hello", res)
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
+export const updateHasSeenAPI = (room_id, receiver_id) => {
+  return axios
+    .post(`${API_URL}/api/chats/update_has_seen/${room_id}/${receiver_id}/`, {}, { headers: headers })
+    .then((res) => {
+      console.log("hello", res)
+      return res;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+

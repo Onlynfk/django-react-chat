@@ -25,8 +25,7 @@ export default function Register() {
     lastName: "",
     email: "",
     password: "",
-    mobileNo: "",
-    username: "",
+   
   });
   const isDisabled = () => {
     // Check if all fields are valid (you can customize the validation logic)
@@ -46,16 +45,11 @@ export default function Register() {
   const handleSignup = async (e) => {
     e.preventDefault();
     let signupData = {
-      mobile: itemToEdit.mobileNo,
-      password: itemToEdit.password,
-      is_viewer: true,
-      is_client: false,
-      user: {
         email: itemToEdit.email,
         username: itemToEdit.username,
         first_name: itemToEdit.firstName,
         last_name: itemToEdit.lastName,
-      },
+        password:itemToEdit.password
     };
     const res = await signupApi(signupData);
     console.log("res", res);
@@ -97,32 +91,7 @@ export default function Register() {
               active={active}
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-2">
-            <TextField
-              name="username"
-              type="text"
-              children="User Name"
-              a={register("username", {
-                required: true,
-                onChange: (e) => {
-                  handleOnChange(e), handleActivation(e);
-                },
-              })}
-              active={active}
-            />
-            <TextField
-              name="phoneNumber"
-              type="text"
-              children="Mobile No"
-              a={register("mobileNo", {
-                required: true,
-                onChange: (e) => {
-                  handleOnChange(e), handleActivation(e);
-                },
-              })}
-              active={active}
-            />
-          </div>
+   
           <TextField
             name="email"
             type="email"
