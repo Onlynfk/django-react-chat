@@ -79,7 +79,7 @@ Systm UML Diagram
 ### It can be accessed on the backend visting this route [http://127.0.0.1:8000/api/docs/]
 
 <div align="start">
-<img width="80%" align="start" src="./Login.png"/>
+<img width="80%" align="start" src="./API.png"/>
 </div>
 
 
