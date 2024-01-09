@@ -91,7 +91,7 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
                     "message": message,
                     "receiver": receiver,
                     "date": date,
-                    "has_seen": True,
+                    "has_seen": has_seen,
                     "text": text,
                     "sender": {"id": sender},
                     "slug": slug,
