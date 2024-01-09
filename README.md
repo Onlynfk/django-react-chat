@@ -7,8 +7,8 @@
 - API routes
 - Real-time chat using WebSocket.
 
-## Live Demo
-Explore the live demo [here](your_live_demo_link).
+## Live Demo [Coming soon]
+Explore the live demo.
 
 ## System Overview (UML Diagram)
 
