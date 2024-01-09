@@ -27,6 +27,17 @@ function ChatRooms() {
 
   const createChatRoom = async (reciever_id) => {
     const res = await createRoomAPI(reciever_id);
+    console.log("res", res.data)
+    const data = res.data
+    console.log("data", data && data.room_id)
+    
+    if(data && reciever_id){
+      navigate(
+        `/chat/${data.room_id}/${
+          reciever_id
+        }/`
+      )
+    }
     console.log("res", res);
   };
 

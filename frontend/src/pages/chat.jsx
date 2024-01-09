@@ -136,11 +136,11 @@ function Chat() {
   return (
     <div className="flex h-screen">
       <div className="w-1/4 bg-gray-200 p-4 hidden md:block">
-        <h2 className="text-xl font-semibold mb-4">Chat Rooms</h2>
+        <h2 className="text-xl font-semibold mb-4 cursor-pointer" onClick={() => navigate('/')}>Chat Rooms</h2>
         {chats.map((chat, index) => (
         <ul>
           <li 
-          onClick={ navigate(
+          onClick={() => navigate(
             `/chat/${chat.room_id}/${
               chat.sender.id == userID
                 ? chat.reciever.id
@@ -156,7 +156,7 @@ function Chat() {
       <div className="flex-1 flex flex-col overflow-hidden border-r border-gray-200">
         {/* Chat Header */}
         <div className="flex-shrink-0 bg-white border-b border-gray-200 p-4">
-          <h2 className="text-xl font-semibold">
+          <h2 className="text-xl font-semibold cursor-pointer" onClick={() => navigate('/')}>
             Chatting with {roomData?.reciever_name}
           </h2>
         </div>

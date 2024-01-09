@@ -55,7 +55,6 @@ export const createRoomAPI = (reciever_id) => {
   return axios
     .get(`${API_URL}/api/chats/create_room/${reciever_id}/`, { headers: headers })
     .then((res) => {
-      console.log("hello", res)
       return res;
     })
     .catch((err) => {
