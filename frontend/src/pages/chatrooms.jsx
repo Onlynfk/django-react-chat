@@ -89,7 +89,7 @@ function ChatRooms() {
     <div className="flex items-center justify-center h-screen">
       <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-4 text-center">
-          Chat Application
+          Welcome {user.first_name} to Chat Application
         </h2>
 
         {/* Tabs */}

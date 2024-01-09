@@ -72,11 +72,31 @@ function Chat() {
     });
 
     socketRef.current.addEventListener("message", (event) => {
-      console.log("Message from server:", event.data);
       // Handle received messages as needed
       const messageObject = JSON.parse(event.data);
+      console.log("Message from server:", messageObject);
+      const is_reciever = messageObject.receiver == userID
+      console.log('is_reciever', is_reciever)
+      console.log('USERID', userID)
       setMessages((prevMessages) => [...prevMessages, messageObject]);
-    });
+
+    if(is_reciever && !messageObject.has_seen){
+      const read_receipt =  {
+        sender: messageObject.sender,
+        receiver: messageObject.receiver,
+        text: messageObject.text,
+        date: messageObject.date,
+        has_seen: messageObject.has_seen,
+        slug: messageObject.slug,
+        read_receipt: 'read_receipt'
+
+      }
+      socketRef.current.send(JSON.stringify(read_receipt));
+
+    }
+});
+
+    
 
     socketRef.current.addEventListener("error", (event) => {
       console.error("WebSocket error:", event);
@@ -128,7 +148,7 @@ function Chat() {
 
   useEffect(() => {
     fetchRoomChats(room_id, receiver_id);
-    // updateHasSeenStatus(room_id, receiver_id);
+    updateHasSeenStatus(room_id, receiver_id);
     fetchChats()
   }, [room_id, receiver_id]);
 
