@@ -25,6 +25,12 @@ function ChatRooms() {
     console.log("res", res.data);
   };
 
+  const handleLogout = () => {
+    localStorage.clear()
+    navigate('/login')
+   
+  }
+
   const createChatRoom = async (reciever_id) => {
     const res = await createRoomAPI(reciever_id);
     console.log("res", res.data)
@@ -59,6 +65,8 @@ function ChatRooms() {
   };
 
   return (
+    <div className="flex flex-col">
+     
     <div className="flex items-center justify-center h-screen">
       <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-4 text-center">
@@ -150,7 +158,13 @@ function ChatRooms() {
                 ))}
           </ul>
         )}
+      
       </div>
+      
+    </div>
+    <button onClick={handleLogout}  className="ml-4 px-2 py-1 bg-gray-500 text-white rounded-md hover:bg-blue-600 focus:outline-none">
+        Logout
+      </button>
     </div>
   );
 }

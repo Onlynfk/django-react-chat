@@ -31,6 +31,7 @@ export default function Register() {
     // Check if all fields are valid (you can customize the validation logic)
     return Object.values(itemToEdit).some((value) => !value);
   };
+  
 
   console.log("itemToEdit", itemToEdit);
 
@@ -54,7 +55,8 @@ export default function Register() {
     const res = await signupApi(signupData);
     console.log("res", res);
     if (res.status != 201) {
-      setError(res.response.data);
+      setError("An error occured" );
+
     } else {
       navigate("/login");
     }

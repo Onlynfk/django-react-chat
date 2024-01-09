@@ -147,7 +147,8 @@ function Chat() {
                 : chat.sender.id
             }/`
           )}
-          className="bg-gray-100 border-gray-300 p-2 mb-2 border rounded cursor-pointer">{chat.sender.id == userID? chat.reciever.first_name: chat.sender.first_name}</li>
+          className={` border-gray-300 p-2 mb-2 border rounded cursor-pointer ${chat.room_id == room_id ? 'bg-blue-500 text-white' : 'bg-gray-100'}`}>
+            {chat.sender.id == userID? chat.reciever.first_name: chat.sender.first_name}</li>
 
         </ul>
           ))}
@@ -170,10 +171,12 @@ function Chat() {
                 message.sender.id === userID ? "text-right" : "text-left"
               }`}
             >
-              {message.text}
+            <p >
+            <span className={`rounded p-1 text-white ${message.sender.id === userID ? 'bg-blue-500' : 'bg-gray-500'}`} >{message.text}</span>
               {message.sender.id === userID && message.has_seen && (
                 <span className="ml-2 text-sm text-green-500">✓</span>
               )}
+            </p>
               {/* Add any additional information you want to display */}
               <div className="text-sm text-gray-500">
                 {new Date(message.date).toLocaleString()}
@@ -194,6 +197,7 @@ function Chat() {
               className="flex-1 px-2 py-1 border border-gray-300 rounded-md mr-2 focus:outline-none"
             />
             <button
+            disabled={newMessage == ""}
               onClick={handleSendMessage}
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none"
             >

@@ -67,13 +67,31 @@ Systm UML Diagram
 
     cd frontend
 
-    yarn add
+    yarn install
 
     yarn run dev
 
-    Your frontend is now running at http://localhost:3000.
-
-
-
+    Your frontend is now running at http://127.0.0.1:5173.
 
 ```
+
+## Frontend Screenshots
+
+<div align="start">
+<img width="80%" align="start" src="./Login.png"/>
+</div>
+
+## Above is the Login Screenshot
+
+
+<div align="start">
+<img width="80%" align="start" src="./Rooms.png"/>
+</div>
+
+## Above is the Chat/Users List Screenshot
+
+<div align="start">
+<img width="80%" align="start" src="./Chat.png"/>
+</div>
+
+## And Lastly the Chat Screenshot
