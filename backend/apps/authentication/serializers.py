@@ -6,62 +6,70 @@ from django.contrib.auth import authenticate
 
 
 class UserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email']
+        fields = ["id", "first_name", "last_name", "email"]
 
 
 class RegisterSerializer(UserSerializer):
-    password = serializers.CharField(
-        max_length=128, min_length=8, write_only=True, required=True)
+    password = serializers.CharField(max_length=128, min_length=8, write_only=True, required=True)
 
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'password',]
+        fields = [
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+            "password",
+        ]
 
     def create(self, validated_data):
         try:
-            user = User.objects.get(email=validated_data['email'])
+            user = User.objects.get(email=validated_data["email"])
         except ObjectDoesNotExist:
             user = User.objects.create_user(**validated_data)
         return user
 
 
 class LoginSerializer(TokenObtainPairSerializer):
-    username_field = 'email'
+    username_field = "email"
 
     def validate(self, attrs):
-        email = attrs.get('email')
-        password = attrs.get('password')
+        email = attrs.get("email")
+        password = attrs.get("password")
 
         if not email or not password:
-            raise serializers.ValidationError(
-                'Must include "email" and "password".')
+            raise serializers.ValidationError('Must include "email" and "password".')
 
         try:
             user = User.objects.get(email=email)
         except User.DoesNotExist:
-            raise serializers.ValidationError('Invalid email or password.')
+            raise serializers.ValidationError("Invalid email or password.")
 
         authenticated_user = authenticate(email=email, password=password)
         if not authenticated_user:
-            raise serializers.ValidationError('Invalid email or password.')
+            raise serializers.ValidationError("Invalid email or password.")
 
         refresh = self.get_token(authenticated_user)
         user_serializer = UserSerializer(authenticated_user)
 
         return {
-            'access': str(refresh.access_token),
-            'refresh': str(refresh),
-            'user': user_serializer.data,
+            "access": str(refresh.access_token),
+            "refresh": str(refresh),
+            "user": user_serializer.data,
         }
 
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email',)
+        fields = (
+            "id",
+            "first_name",
+            "last_name",
+            "email",
+        )
 
 
 class ChangePasswordSerializer(serializers.Serializer):

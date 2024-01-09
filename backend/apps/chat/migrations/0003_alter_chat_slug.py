@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('chat', '0002_auto_20240108_2229'),
+        ("chat", "0002_auto_20240108_2229"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='chat',
-            name='slug',
+            model_name="chat",
+            name="slug",
             field=models.CharField(blank=True, max_length=300, null=True, unique=True),
         ),
     ]

@@ -10,6 +10,7 @@ from rest_framework.views import APIView
 from .models import User
 from .serializers import UserSerializer, ChangePasswordSerializer, UpdateUserSerializer
 
+
 class ChangePasswordView(generics.UpdateAPIView):
     serializer_class = ChangePasswordSerializer
     permission_classes = (IsAuthenticated,)
@@ -32,9 +33,10 @@ class ChangePasswordView(generics.UpdateAPIView):
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 class UserAPIView(APIView):
     permission_classes = (IsAuthenticated,)
-    
+
     def get(self, request, *args, **kwargs):
         user = self.request.user
         serializer = UserSerializer(user)
@@ -42,8 +44,7 @@ class UserAPIView(APIView):
 
     def put(self, request, *args, **kwargs):
         user = self.request.user
-        serializer = UpdateUserSerializer(
-            user, data=request.data, partial=True)
+        serializer = UpdateUserSerializer(user, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_200_OK)

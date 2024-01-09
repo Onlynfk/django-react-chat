@@ -6,26 +6,27 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('chat', '0001_initial'),
+        ("chat", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='chat',
-            name='slug',
+            model_name="chat",
+            name="slug",
             field=models.CharField(blank=True, max_length=300, null=True),
         ),
         migrations.AlterField(
-            model_name='chat',
-            name='reciever',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='friend_msg', to=settings.AUTH_USER_MODEL),
+            model_name="chat",
+            name="reciever",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name="friend_msg", to=settings.AUTH_USER_MODEL
+            ),
         ),
         migrations.AlterField(
-            model_name='chat',
-            name='text',
+            model_name="chat",
+            name="text",
             field=models.TextField(),
         ),
     ]

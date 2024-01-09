@@ -14,7 +14,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = RegisterSerializer
     permission_classes = (AllowAny,)
     queryset = User.objects.all()
-    http_method_names = ['post', 'patch']
+    http_method_names = ["post", "patch"]
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -36,7 +36,7 @@ class RegistrationViewSet(ModelViewSet, TokenObtainPairView):
 class LoginViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = LoginSerializer
     permission_classes = (AllowAny,)
-    http_method_names = ['post']
+    http_method_names = ["post"]
 
     def create(self, request, *args, **kwargs):
         req_data = request.data
@@ -44,22 +44,16 @@ class LoginViewSet(ModelViewSet, TokenObtainPairView):
         password = req_data.get("password")
 
         if not email or not password:
-            return Response({'detail': 'Must include email and password.'}, status=status.HTTP_400_BAD_REQUEST)
-        
+            return Response({"detail": "Must include email and password."}, status=status.HTTP_400_BAD_REQUEST)
+
         serializer = self.get_serializer(data=request.data)
         try:
             serializer.is_valid(raise_exception=True)
         except serializers.ValidationError as e:
-            return Response({'detail': e.detail["non_field_errors"][0]}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": e.detail["non_field_errors"][0]}, status=status.HTTP_400_BAD_REQUEST)
 
         data = serializer.validated_data
         return Response(
-            {
-                'user': data.get('user'),
-                'refresh': data.get('refresh'),
-                'access': data.get('access')
-            },
-            status=status.HTTP_200_OK
+            {"user": data.get("user"), "refresh": data.get("refresh"), "access": data.get("access")},
+            status=status.HTTP_200_OK,
         )
-
-

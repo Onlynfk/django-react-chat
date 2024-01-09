@@ -6,7 +6,6 @@ import django.db.models.deletion
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,24 +14,55 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Room',
+            name="Room",
             fields=[
-                ('room_id', models.AutoField(primary_key=True, serialize=False)),
-                ('created', models.DateTimeField(auto_now_add=True)),
-                ('reciever', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reciever', to=settings.AUTH_USER_MODEL)),
-                ('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sender', to=settings.AUTH_USER_MODEL)),
+                ("room_id", models.AutoField(primary_key=True, serialize=False)),
+                ("created", models.DateTimeField(auto_now_add=True)),
+                (
+                    "reciever",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reciever",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "sender",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="sender", to=settings.AUTH_USER_MODEL
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Chat',
+            name="Chat",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('text', models.CharField(max_length=300)),
-                ('date', models.DateTimeField(auto_now_add=True)),
-                ('has_seen', models.BooleanField(default=False)),
-                ('reciever', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='reciever_msg', to=settings.AUTH_USER_MODEL)),
-                ('room_id', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='chats', to='chat.room')),
-                ('sender', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='sender_msg', to=settings.AUTH_USER_MODEL)),
+                ("id", models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name="ID")),
+                ("text", models.CharField(max_length=300)),
+                ("date", models.DateTimeField(auto_now_add=True)),
+                ("has_seen", models.BooleanField(default=False)),
+                (
+                    "reciever",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="reciever_msg",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "room_id",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, related_name="chats", to="chat.room"
+                    ),
+                ),
+                (
+                    "sender",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="sender_msg",
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
     ]
