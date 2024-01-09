@@ -22,10 +22,8 @@ Systm UML Diagram
 
 ## Prerequisites
 
-Before using this script, ensure you have the following prerequisites installed on your system:
-
 - Python 3.9 or greater
-- Virtualenv (recommended for creating virtual environments) if not using Docker
+- Virtualenv (recommended for creating virtual environments) if using Docker
 - Django (installed in your project)
 
 
