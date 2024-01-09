@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { fetchRoomAPI, chatsListAPI,  updateHasSeenAPI } from "../api";
+import { API_HOST } from '../config';
 
 function Chat() {
   const navigate = useNavigate();
@@ -63,7 +64,7 @@ function Chat() {
 
     // Establish a WebSocket connection when the component mounts
     socketRef.current = new WebSocket(
-      `ws://127.0.0.1:8000/ws/chat/${room_id}/`
+      `ws://${API_HOST}/ws/chat/${room_id}/`
     );
 
     socketRef.current.addEventListener("open", (event) => {
@@ -127,7 +128,7 @@ function Chat() {
 
   useEffect(() => {
     fetchRoomChats(room_id, receiver_id);
-    updateHasSeenStatus(room_id, receiver_id);
+    // updateHasSeenStatus(room_id, receiver_id);
     fetchChats()
   }, [room_id, receiver_id]);
 
@@ -173,7 +174,7 @@ function Chat() {
             >
             <p >
             <span className={`rounded p-1 text-white ${message.sender.id === userID ? 'bg-blue-500' : 'bg-gray-500'}`} >{message.text}</span>
-              {message.sender.id === userID && message.has_seen && (
+              {message.sender.id === userID && message.has_seen == true && (
                 <span className="ml-2 text-sm text-green-500">✓</span>
               )}
             </p>

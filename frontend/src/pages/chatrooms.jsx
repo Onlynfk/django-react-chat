@@ -31,21 +31,40 @@ function ChatRooms() {
    
   }
 
-  const createChatRoom = async (reciever_id) => {
-    const res = await createRoomAPI(reciever_id);
-    console.log("res", res.data)
-    const data = res.data
-    console.log("data", data && data.room_id)
-    
-    if(data && reciever_id){
-      navigate(
-        `/chat/${data.room_id}/${
-          reciever_id
-        }/`
-      )
+  const createChatRoom = async (receiver_id) => {
+    try {
+      const res = await createRoomAPI(receiver_id);
+      console.log("roooomm", res.data && res.data[0].room_id);
+
+      const room_id =res.data && res.data[0].room_id;
+  
+      if (room_id) {
+        navigate(`/chat/${room_id}/${receiver_id}/`);
+      } else {
+        console.error("Error creating chat room: Invalid response or missing room_id");
+        // Handle the error or provide user feedback accordingly
+      }
+    } catch (error) {
+      console.error("Error creating chat room:", error);
+      // Handle the error or provide user feedback accordingly
     }
-    console.log("res", res);
   };
+  
+  // const createChatRoom = async (reciever_id) => {
+  //   const res = await createRoomAPI(reciever_id);
+  //   console.log("res", res.data)
+  //   const data = res.data
+  //   const room_id = data && data.room_id
+    
+  //   if(data && room_id){
+  //     navigate(
+  //       `/chat/${room_id}/${
+  //         reciever_id
+  //       }/`
+  //     )
+  //   }
+  //   console.log("res", res);
+  // };
 
   useEffect(() => {
     // Check if token exists in local storage
