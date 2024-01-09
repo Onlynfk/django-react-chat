@@ -59,7 +59,8 @@ class RoomChoiceView(APIView):
         if not room:
             room = Room.objects.create(sender=request.user, reciever=reciever)
             room.save()
-
+            serializer = RoomSerializer(room, many=True)
+            
         serializer = RoomSerializer(room, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

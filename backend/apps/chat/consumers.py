@@ -23,10 +23,21 @@ def create_new_message_sync(me, reciever, message, room_id, slug):
 
     except Exception as e:
         print(f"An error occurred: {e}")
-
-
+        
 # Convert the synchronous function to asynchronous
 create_new_message = sync_to_async(create_new_message_sync, thread_sensitive=False)
+
+def handle_read_receipt_sync(slug):
+    try:
+        chat = Chat.objects.get(slug=slug)
+        chat.has_seen = True
+        chat.save()
+
+    except Exception as e:
+        print(f"An error occurred: {e}")
+
+handle_update_status = sync_to_async(handle_read_receipt_sync, thread_sensitive=False)
+
 
 
 class ChatRoomConsumer(AsyncWebsocketConsumer):
@@ -57,8 +68,22 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         date = text_data_json["date"]
         slug = text_data_json["slug"]
         has_seen = text_data_json["has_seen"]
-
-        await self.channel_layer.group_send(
+        
+        if "read_receipt" in text_data_json:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    "type": "read_receipt",
+                    "text": text,
+                    "receiver": receiver,
+                    "date": date,
+                    "has_seen": has_seen,
+                    "sender": sender,
+                    "slug": slug,
+                },
+            )
+        else:
+            await self.channel_layer.group_send(
             self.room_group_name,
             {
                 "type": "chatroom_message",
@@ -88,10 +113,37 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         await self.send(
             text_data=json.dumps(
                 {
-                    "message": message,
                     "receiver": receiver,
                     "date": date,
                     "has_seen": has_seen,
+                    "text": text,
+                    "sender": {"id": sender},
+                    "slug": slug,
+                }
+            )
+        )
+        
+    """Read Receipts"""
+
+    async def read_receipt(self, event):
+        receiver = event["receiver"]
+        date = event["date"]
+        sender = event["sender"]
+        text = event["text"]
+        slug = event["slug"]
+        print("slug", slug)
+
+        # Handle the read receipt, e.g., update the read status in the database
+        # Use the asynchronous version of your read receipt handling function
+        await handle_update_status(slug=slug)
+
+        # Broadcast the read receipt to other users in the chat
+        await self.send(
+            text_data=json.dumps(
+                {
+                    "receiver": receiver,
+                    "date": date,
+                    "has_seen": True,
                     "text": text,
                     "sender": {"id": sender},
                     "slug": slug,
