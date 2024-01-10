@@ -68,35 +68,26 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         date = text_data_json["date"]
         slug = text_data_json["slug"]
         has_seen = text_data_json["has_seen"]
+        read_receipt = text_data_json["read_receipt"] if 'read_receipt' in text_data_json else None
         
-        if "read_receipt" in text_data_json:
-            await self.channel_layer.group_send(
+        await self.channel_layer.group_send(
                 self.room_group_name,
                 {
-                    "type": "read_receipt",
+                    "type": "chatroom_message",
                     "text": text,
                     "receiver": receiver,
                     "date": date,
                     "has_seen": has_seen,
                     "sender": sender,
                     "slug": slug,
+                    "read_receipt":read_receipt
                 },
             )
-        else:
-            await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                "type": "chatroom_message",
-                "text": text,
-                "receiver": receiver,
-                "date": date,
-                "has_seen": has_seen,
-                "sender": sender,
-                "slug": slug,
-            },
-        )
+        
+            
+       
 
-    """Messages"""
+    """Messages and Read Receipts"""
 
     async def chatroom_message(self, event):
         message = event["text"]
@@ -106,47 +97,39 @@ class ChatRoomConsumer(AsyncWebsocketConsumer):
         sender = event["sender"]
         text = event["text"]
         slug = event["slug"]
-
-        # Use the asynchronous version of create_new_message
-        await create_new_message(me=sender, reciever=receiver, message=message, room_id=self.room_name, slug=slug)
-
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "receiver": receiver,
-                    "date": date,
-                    "has_seen": has_seen,
-                    "text": text,
-                    "sender": {"id": sender},
-                    "slug": slug,
-                }
-            )
-        )
+        read_receipt =event['read_receipt']
         
-    """Read Receipts"""
+        if not read_receipt:
+            # Use the asynchronous version of create_new_message
+            await create_new_message(me=sender, reciever=receiver, message=message, room_id=self.room_name, slug=slug)
 
-    async def read_receipt(self, event):
-        receiver = event["receiver"]
-        date = event["date"]
-        sender = event["sender"]
-        text = event["text"]
-        slug = event["slug"]
-        print("slug", slug)
-
-        # Handle the read receipt, e.g., update the read status in the database
-        # Use the asynchronous version of your read receipt handling function
-        await handle_update_status(slug=slug)
-
-        # Broadcast the read receipt to other users in the chat
-        await self.send(
-            text_data=json.dumps(
-                {
-                    "receiver": receiver,
-                    "date": date,
-                    "has_seen": True,
-                    "text": text,
-                    "sender": {"id": sender},
-                    "slug": slug,
-                }
+            await self.send(
+                text_data=json.dumps(
+                    {
+                        "receiver": receiver,
+                        "date": date,
+                        "has_seen": has_seen,
+                        "text": text,
+                        "sender": {"id": sender},
+                        "slug": slug,
+                    }
+                )
             )
-        )
+        else:
+            await handle_update_status(slug=slug)
+
+            # Broadcast the read receipt to other users in the chat
+            await self.send(
+                text_data=json.dumps(
+                    {
+                        "receiver": receiver,
+                        "date": date,
+                        "has_seen": True,
+                        "text": text,
+                        "sender": {"id": sender},
+                        "slug": slug,
+                    }
+                )
+            )
+            
+
