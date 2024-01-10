@@ -81,9 +81,9 @@ class UpdateHasSeenAPIView(APIView):
             room_group_name = "chat_%s" % room_id
 
             # Your logic to validate the room and receiver goes here
-            chats = Chat.objects.filter(room_id=room_instance, has_seen=False).order_by("date")
+            chats = Chat.objects.filter(room_id=room_instance, has_seen=False).order_by("-date")
             receiver_chats = chats.filter(Q(sender=receiver_id) | Q(reciever=receiver_id))
-            # print("receiver_chats", receiver_chats)
+            print("receiver_chats", receiver_chats)
             for chat in receiver_chats:
                 message = {
                     "type": "chatroom_message",
