@@ -78,7 +78,24 @@ function Chat() {
       const is_reciever = messageObject.receiver == userID
       console.log('is_reciever', is_reciever)
       console.log('USERID', userID)
-      setMessages((prevMessages) => [...prevMessages, messageObject]);
+      setMessages((prevMessages) => {
+        const updatedMessages = [...prevMessages];
+        const existingMessageIndex = updatedMessages.findIndex(
+          (msg) => msg.slug === messageObject.slug
+        );
+      
+        if (existingMessageIndex !== -1) {
+          // If message with the same slug exists, update its fields
+          updatedMessages[existingMessageIndex] = { ...updatedMessages[existingMessageIndex], ...messageObject };
+        } else {
+          // If no message with the same slug, add the new message
+          updatedMessages.push(messageObject);
+        }
+      
+        return updatedMessages;
+      });
+      
+      // setMessages((prevMessages) => [...prevMessages, messageObject]);
 
     if(is_reciever && !messageObject.has_seen){
       const read_receipt =  {

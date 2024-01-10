@@ -11,7 +11,7 @@ function ChatRooms() {
   const userData = localStorage.getItem("user");
   const user = userData && JSON.parse(userData);
   const userID = user && user.id;
-  console.log("user", userID);
+
 
   const fetchChats = async () => {
     const res = await chatsListAPI();
@@ -70,7 +70,7 @@ function ChatRooms() {
     // Check if token exists in local storage
     const token = localStorage.getItem("token");
 
-    if (!token) {
+    if (!token || !user) {
       // Redirect to login route if no token
       navigate("/login");
     } else {
@@ -89,7 +89,7 @@ function ChatRooms() {
     <div className="flex items-center justify-center h-screen">
       <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
         <h2 className="text-2xl font-semibold mb-4 text-center">
-          Welcome {user.first_name} to Chat Application
+          Welcome {user && user.first_name} to Chat Application
         </h2>
 
         {/* Tabs */}
