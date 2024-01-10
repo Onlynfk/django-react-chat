@@ -6,6 +6,7 @@
 - Logout
 - API routes
 - Real-time chat using WebSocket.
+- Read Receipt functionality
 
 ## Live Demo [Coming soon]
 Explore the live demo.
