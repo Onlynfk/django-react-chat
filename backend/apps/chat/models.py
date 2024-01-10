@@ -3,10 +3,9 @@ from apps.authentication.models import User
 
 
 class Room(models.Model):
-    # room_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     room_id = models.AutoField(primary_key=True)
-    sender = models.ForeignKey(User, related_name="sender", on_delete=models.CASCADE)
-    reciever = models.ForeignKey(User, related_name="reciever", on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, related_name="author", on_delete=models.CASCADE)
+    reciever = models.ForeignKey(User, related_name="reciepent", on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

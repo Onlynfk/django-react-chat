@@ -46,7 +46,6 @@ class RoomChoiceView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request, reciever_id, *args, **kwargs):
-        print("reciever_id", reciever_id)
 
         try:
             reciever = User.objects.get(id=reciever_id)
@@ -54,14 +53,16 @@ class RoomChoiceView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
 
         room = Room.objects.filter(
-            Q(sender=request.user, reciever=reciever_id) | Q(sender=reciever_id, reciever=request.user)
-        )
+            Q(sender=request.user, reciever=reciever) | Q(sender=reciever, reciever=request.user)
+        ).first()
+
         if not room:
             room = Room.objects.create(sender=request.user, reciever=reciever)
             room.save()
-            serializer = RoomSerializer(room, many=True)
+            serializer = RoomSerializer(room, many=False)
+            return Response(serializer.data, status=status.HTTP_200_OK)
             
-        serializer = RoomSerializer(room, many=True)
+        serializer = RoomSerializer(room, many=False)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
